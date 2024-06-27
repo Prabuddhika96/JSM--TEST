@@ -1,41 +1,61 @@
-// Importing required modules
 const express = require("express");
-const bodyParser = require("body-parser"); // Import body-parser to handle JSON payloads
+const bodyParser = require("body-parser");
+const axios = require("axios");
 
-// Create an Express application
 const app = express();
-
-// Use body-parser middleware to parse JSON payloads
 app.use(bodyParser.json());
 
-// Define a route
 app.get("/", (req, res) => {
   res.send("Hello, World!");
 });
 
-app.post("/webhook", (req, res) => {
+app.post("/webhook", async (req, res) => {
   console.log("Received webhook from Jira:");
 
-  // Log the entire payload for demonstration
-  //   console.log("req.body: ", req.body);
+  try {
+    const { issue } = req.body;
+    const issueKey = issue.key;
+    const summary = issue.fields.summary;
+    console.log(`Issue Key: ${issueKey}`);
+    console.log(`Summary: ${summary}`);
 
-  // Extract specific data from req.body as needed
-  const { issue } = req.body;
+    // Example: Call Jira API to create an issue
+    const jiraBaseUrl = "https://prabuddhika1996.atlassian.net";
+    const createIssueUrl = `${jiraBaseUrl}/rest/api/3/issue`;
 
-  // Example: Log issue key and summary
-  const issueKey = issue.key;
-  const summary = issue.fields.summary;
-  console.log(`Issue Key: ${issueKey}`);
-  console.log(`Summary: ${summary}`);
+    const jiraAuth = {
+      username: "prabuddhika1996@gmail.com",
+      password:
+        "ATATT3xFfGF0iYtJAqpAhlVrTEdvFEHeJX7fRK1Cp1iyZnto7k69S4SRv0FTWncZV1whssVn6nVOToWIZwQQUJceVjmuWicQCBceeTGYY5QHGCgHyY-BP9BZGT49Dltqd7yzmxXYLWNvw9eF5gpM0BMBFcO59TWt5jrqEfHdYv2iWbktCyZFZAk=BD8CDC7E", // Or use API token here
+    };
 
-  // Store the summary in a variable
-  const issueSummary = summary;
+    const issueData = {
+      fields: {
+        project: {
+          key: "TT", // Replace with your project key
+        },
+        summary: summary,
+        description: "Issue created via webhook from Jira",
+        issuetype: {
+          name: "Task", // Replace with the appropriate issue type
+        },
+      },
+    };
 
-  // Send a response
-  res.status(200).send("Webhook received successfully");
+    const response = await axios.post(createIssueUrl, issueData, {
+      auth: jiraAuth,
+    });
+
+    console.log("Issue created in Jira:", response.data);
+    res
+      .status(200)
+      .send("Webhook received and issue created successfully in Jira");
+  } catch (error) {
+    console.error("Error creating issue in Jira:", error.message);
+    res.status(500).send("Error processing webhook");
+  }
 });
 
-// Start the server
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
