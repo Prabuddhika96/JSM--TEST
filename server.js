@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const axios = require("axios");
+const { createTask } = require("./create-task-util");
 require("dotenv").config();
 
 const app = express();
@@ -21,6 +22,21 @@ app.post("/webhook", async (req, res) => {
     console.log(`issue: ${issue}`);
     // console.log(`Issue Key: ${issueKey}`);
     // console.log(`Summary: ${summary}`);
+
+    const taskData = {
+      fields: {
+        project: {
+          key: "JS",
+        },
+        summary: summary,
+        issuetype: {
+          name: "Task",
+        },
+        customfield_XXXXX: issueKey, // Replace XXXXX with the custom field ID or key in Jira
+      },
+    };
+
+    createTask(taskData);
   } catch (error) {
     console.error("Error:", error.message);
   }

@@ -30,3 +30,5 @@ const createTask = async (issueData) => {
     return res.status(500).send({ error: error.message });
   }
 };
+
+module.exports = { createTask };
