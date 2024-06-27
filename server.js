@@ -19,10 +19,6 @@ app.post("/webhook", async (req, res) => {
     const issueKey = issue.key;
     const summary = issue.fields.summary;
 
-    // console.log(`issue: ${issue}`);
-    // console.log(`Issue Key: ${issueKey}`);
-    // console.log(`Summary: ${summary}`);
-
     const taskData = {
       fields: {
         project: {
@@ -32,7 +28,6 @@ app.post("/webhook", async (req, res) => {
         issuetype: {
           name: "Task",
         },
-        // customfield_XXXXX: issueKey, // Replace XXXXX with the custom field ID or key in Jira
       },
     };
 
