@@ -1,8 +1,12 @@
 // Importing required modules
 const express = require("express");
+const bodyParser = require("body-parser"); // Import body-parser to handle JSON payloads
 
 // Create an Express application
 const app = express();
+
+// Use body-parser middleware to parse JSON payloads
+app.use(bodyParser.json());
 
 // Define a route
 app.get("/", (req, res) => {
@@ -11,16 +15,24 @@ app.get("/", (req, res) => {
 
 app.post("/webhook", (req, res) => {
   console.log("Received webhook from Jira:");
-  //   console.log("req: ", req); // Log the entire payload for demonstration
 
-  //   // Extract specific data from req.body as needed
-  //   const { issue } = req.body;
+  // Log the entire payload for demonstration
+  console.log("req.body: ", req.body);
 
-  //   // Example: Log issue key and summary
-  //   console.log(`Issue Key: ${issue.key}`);
-  //   console.log(`Summary: ${issue.fields.summary}`);
+  // Extract specific data from req.body as needed
+  const { issue } = req.body;
 
-  //   res.status(200).send("Webhook received successfully");
+  // Example: Log issue key and summary
+  const issueKey = issue.key;
+  const summary = issue.fields.summary;
+  console.log(`Issue Key: ${issueKey}`);
+  console.log(`Summary: ${summary}`);
+
+  // Store the summary in a variable
+  const issueSummary = summary;
+
+  // Send a response
+  res.status(200).send("Webhook received successfully");
 });
 
 // Start the server
