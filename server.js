@@ -22,7 +22,7 @@ app.post("/webhook", async (req, res) => {
     const taskData = {
       fields: {
         project: {
-          key: "JS",
+          key: "JS2",
         },
         summary: summary,
         issuetype: {
