@@ -21,9 +21,21 @@ app.post("/webhook", async (req, res) => {
   const taskData = {
     fields: {
       project: {
-        key: "JS2",
+        key: "JS3",
       },
       summary: summary,
+      issuetype: {
+        name: "Task",
+      },
+    },
+  };
+
+  const data = {
+    fields: {
+      project: {
+        key: "JS3",
+      },
+      summary: "Task from Node.js",
       issuetype: {
         name: "Task",
       },
@@ -51,7 +63,7 @@ app.post("/webhook", async (req, res) => {
   };
 
   try {
-    const response = await axios.post(endpoint, taskData, config);
+    const response = await axios.post(endpoint, data, config);
     console.log("Issue created:", response.data);
     return res.status(200).send(response.data);
   } catch (error) {
@@ -65,6 +77,8 @@ app.post("/issue-create", async function (req, res) {
   const apiToken = process.env.JIRA_API_TOKEN;
   const domain = process.env.JIRA_DOMAIN;
 
+  console.log("API token : ".apiToken);
+
   // Base64 encode the credentials for Basic Authentication
   const token = Buffer.from(`${username}:${apiToken}`, "utf8").toString(
     "base64"
@@ -77,7 +91,7 @@ app.post("/issue-create", async function (req, res) {
   const data = {
     fields: {
       project: {
-        key: "JS",
+        key: "JS3",
       },
       summary: "Task from Node.js",
       issuetype: {
