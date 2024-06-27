@@ -32,12 +32,11 @@ app.post("/webhook", async (req, res) => {
     const issueData = {
       fields: {
         project: {
-          key: "TT", // Replace with your project key
+          key: "TT",
         },
-        summary: summary,
-        description: "Issue created via webhook from Jira",
+        summary: "task from node js app",
         issuetype: {
-          name: "Task", // Replace with the appropriate issue type
+          name: "Task",
         },
       },
     };
