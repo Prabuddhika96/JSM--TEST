@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const axios = require("axios");
+require("dotenv").config();
 
 const app = express();
 app.use(bodyParser.json());
@@ -25,8 +26,7 @@ app.post("/webhook", async (req, res) => {
 
     const jiraAuth = {
       username: "prabuddhika1996@gmail.com",
-      password:
-        "ATATT3xFfGF0iYtJAqpAhlVrTEdvFEHeJX7fRK1Cp1iyZnto7k69S4SRv0FTWncZV1whssVn6nVOToWIZwQQUJceVjmuWicQCBceeTGYY5QHGCgHyY-BP9BZGT49Dltqd7yzmxXYLWNvw9eF5gpM0BMBFcO59TWt5jrqEfHdYv2iWbktCyZFZAk=BD8CDC7E", // Or use API token here
+      password: process.env.API_KEY, // Or use API token here
     };
 
     const issueData = {
