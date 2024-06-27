@@ -19,7 +19,7 @@ app.post("/webhook", async (req, res) => {
     const issueKey = issue.key;
     const summary = issue.fields.summary;
 
-    console.log(`issue: ${issue}`);
+    // console.log(`issue: ${issue}`);
     // console.log(`Issue Key: ${issueKey}`);
     // console.log(`Summary: ${summary}`);
 

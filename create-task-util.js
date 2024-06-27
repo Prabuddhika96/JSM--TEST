@@ -1,4 +1,5 @@
 require("dotenv").config();
+const axios = require("axios");
 
 const createTask = async (issueData) => {
   const username = process.env.JIRA_USERNAME;
@@ -24,10 +25,10 @@ const createTask = async (issueData) => {
   try {
     const response = await axios.post(endpoint, issueData, config);
     console.log("Issue created:", response.data);
-    return res.status(200).send(response.data);
+    return response.data; // Return the issue creation response
   } catch (error) {
     console.error("Error creating issue:", error.message);
-    return res.status(500).send({ error: error.message });
+    throw error; // Throw the error to handle it in the caller function
   }
 };
 
