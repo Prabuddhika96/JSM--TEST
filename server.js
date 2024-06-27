@@ -1,6 +1,5 @@
 require("dotenv").config();
 const express = require("express");
-const axios = require("axios");
 const { createTask } = require("./create-task-util");
 const app = express();
 
@@ -11,7 +10,6 @@ app.post("/webhook", async (req, res) => {
 
   const { issue, webhookEvent } = req.body;
 
-  // Ensure webhook event is of interest, e.g., issue created or updated
   if (
     webhookEvent !== "jira:issue_created" &&
     webhookEvent !== "jira:issue_updated"
@@ -21,24 +19,23 @@ app.post("/webhook", async (req, res) => {
 
   const projectKey = issue.fields.project.key;
 
-  // Ensure the project key is the one you're interested in
+  // check project key
   if (projectKey !== "JI") {
     return res.status(200).send("Project not handled");
   }
 
-  const issueKey = issue.key;
   const summary = issue.fields.summary;
 
   const taskData = {
     fields: {
       project: {
-        key: "JS4", // Your target project key
+        key: "JS4",
       },
       summary: summary,
       issuetype: {
         name: "Task",
       },
-      // customfield_XXXXX: issueKey, // Replace XXXXX with your actual custom field ID
+      // customfield_1: issueKey,
     },
   };
 
