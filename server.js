@@ -24,6 +24,7 @@ app.post("/webhook", async (req, res) => {
     return res.status(200).send("Project not handled");
   }
 
+  const issueKey = issue.key;
   const summary = issue.fields.summary;
 
   const taskData = {
