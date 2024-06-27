@@ -11,7 +11,7 @@ app.get("/", (req, res) => {
 
 app.post("/webhook", (req, res) => {
   console.log("Received webhook from Jira:");
-  //   console.log(req.body); // Log the entire payload for demonstration
+  console.log(req); // Log the entire payload for demonstration
 
   //   // Extract specific data from req.body as needed
   //   const { issue } = req.body;
