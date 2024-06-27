@@ -25,10 +25,10 @@ const createTask = async (issueData) => {
   try {
     const response = await axios.post(endpoint, issueData, config);
     console.log("Issue created:", response.data);
-    return response.data; // Return the issue creation response
+    return response.data;
   } catch (error) {
     console.error("Error creating issue:", error.message);
-    throw error; // Throw the error to handle it in the caller function
+    throw error;
   }
 };
 
