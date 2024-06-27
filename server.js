@@ -35,7 +35,7 @@ app.post("/webhook", async (req, res) => {
       issuetype: {
         name: "Task",
       },
-      // customfield_1: issueKey,
+      customfield_1: issueKey,
     },
   };
 
